@@ -1,0 +1,16 @@
+﻿@model Models.Dtos.EmployeesDTO
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Thales Test</h1>
+    <h1>Employees</h1>
+    <ul>
+        @foreach (var employee in Model.data)
+        {
+            <li>@employee.employee_name - Salary: @employee.employee_salary - Age: @employee.employee_age</li>
+        }
+    </ul>
+</div>
