@@ -16,3 +16,36 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.error {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+.error-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error_h1 {
+    color: #53595D;
+    text-align: center;
+}
+
+.error_p {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.error-signature {
+    color: #555;
+    font-size: 14px;
+}

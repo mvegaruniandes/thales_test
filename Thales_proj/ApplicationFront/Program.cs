@@ -10,9 +10,14 @@ public class Program
         builder.Services.AddControllersWithViews();
         string section = builder.Configuration.GetValue<string>("BaseAddress");
 
-        builder.Services.AddScoped<ApiService>(provider =>
+        builder.Services.AddScoped<GetEmployees>(provider =>
         {
-            return new ApiService(section);
+            return new GetEmployees(section);
+        });
+
+        builder.Services.AddScoped<GetEmployeeById>(provider =>
+        {
+            return new GetEmployeeById(section);
         });
 
         var app = builder.Build();

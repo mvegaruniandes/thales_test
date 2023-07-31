@@ -4,13 +4,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Thales Test</h1>
-    <h1>Employees</h1>
-    <ul>
-        @foreach (var employee in Model.data)
-        {
-            <li>@employee.employee_name - Salary: @employee.employee_salary - Age: @employee.employee_age</li>
-        }
-    </ul>
+<h1 class="display-4">Employees</h1>
+<div class="container mt-5 ">
+    <h3>Filter</h3>
+    @using (Html.BeginForm("Search", "Home"))
+    {
+        <div class="form-group">
+            <label for="id">Id:</label>
+            <input type="text" class="form-control" name="id" id="id" placeholder="Id">
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Search</button>
+    }
+    <br />
+    <table class="table table-responsive table-striped table-bordered col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Age</th>
+                <th>Profile Image</th>
+                <th>Employee Anual Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.data)
+            {
+                <tr>
+                    <td scope="row">@item.id</td>
+                    <td>@item.employee_name</td>
+                    <td>@item.employee_salary.ToString("N2")</td>
+                    <td>@item.employee_age</td>
+                    <td>@item.profile_image</td>
+                    <td>@item.employee_salary_calc.ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

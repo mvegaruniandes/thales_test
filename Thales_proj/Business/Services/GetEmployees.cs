@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 
 namespace Business.Services
 {
-    public class ApiService
+    public class GetEmployees
     {
         private readonly string _baseAddress;
 
-        public ApiService(string baseAddress)
+        public GetEmployees(string baseAddress)
         {
             _baseAddress = baseAddress;
         }
@@ -23,12 +23,25 @@ namespace Business.Services
                     // Deserializar el JSON en una instancia de ApiResponse
                     var apiResponse = JsonConvert.DeserializeObject<EmployeesDTO>(response);
 
+                    decimal months = 12;
+
+                    foreach (var employee in apiResponse.data)
+                    {
+                        // Calcula el nuevo salario aumentando el salario actual en el porcentaje deseado.
+                        employee.employee_salary_calc += employee.employee_salary * months;
+                    }
+
                     return apiResponse;
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                var apiResponse = new EmployeesDTO();
+
+                apiResponse.message = "Too Many Requests.";
+                apiResponse.status = ex.Message;
+
+                return apiResponse;
             }
         }
     }

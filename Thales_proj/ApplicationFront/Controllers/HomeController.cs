@@ -1,6 +1,7 @@
 ﻿using ApplicationFront.Models;
 using Business.Services;
 using Microsoft.AspNetCore.Mvc;
+using Models.Dtos;
 using System.Diagnostics;
 
 namespace ApplicationFront.Controllers
@@ -8,19 +9,58 @@ namespace ApplicationFront.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApiService _apiService;
+        private readonly GetEmployees _apiEmployees;
+        private readonly GetEmployeeById _apiEmployee;
 
 
-        public HomeController(ILogger<HomeController> logger, ApiService apiService)
+        public HomeController(ILogger<HomeController> logger, GetEmployees apiEmployees, GetEmployeeById apiEmployee)
         {
             _logger = logger;
-            _apiService = apiService;
+            _apiEmployees = apiEmployees;
+            _apiEmployee = apiEmployee;
         }
 
         public IActionResult Index()
         {
             // Realizar la llamada a la API y obtener los datos
-            var apiData = _apiService.GetEmployeesAsync();
+            var apiData = _apiEmployees.GetEmployeesAsync();
+
+            if (apiData.data == null)
+            {
+                var viewModel = new ErrorViewModel
+                {
+                    ErrorMessage = apiData.message
+                };
+
+                return View("Error", viewModel);
+            }
+
+            // Enviar los datos a la vista
+            return View(apiData);
+        }
+
+        public ActionResult Search(int? id)
+        {
+            var apiData = new EmployeesDTO();
+
+            if (id != null)
+            {
+                apiData = _apiEmployee.GetEmployeeByIdAsync(id);
+            }
+            else
+            {
+                apiData = _apiEmployees.GetEmployeesAsync();
+            }
+
+            if (apiData.data == null)
+            {
+                var viewModel = new ErrorViewModel
+                {
+                    ErrorMessage = apiData.message
+                };
+
+                return View("Error", viewModel);
+            }
 
             // Enviar los datos a la vista
             return View(apiData);
